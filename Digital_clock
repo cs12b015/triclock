@@ -1,0 +1,126 @@
+#include <gtk/gtk.h>
+#include<stdio.h>
+#include<time.h>
+
+
+char buf[5];
+gint sec,min,hour,houra,mina,seca,hourb,minb,secb;
+gint m,n,o,i;
+GtkWidget *labelh;
+	GtkWidget *labelm;
+	GtkWidget *labels;
+	GtkWidget *labelh1;
+	GtkWidget *labelm1;
+	GtkWidget *labels1;
+	GtkWidget *label1;
+	GtkWidget *label2;
+	GtkWidget *label11;
+
+
+
+void secondd1(GtkWidget *widget, gpointer label)
+{
+	time_t seconds;
+	seconds = time (NULL);
+	seconds=(seconds+19800);
+	m=(seconds/86400);
+	n=(seconds-(m*86400));
+	hour=(n/3600);
+	houra=(hour/10);
+	hourb=(hour % 10);
+	o=(n-(hour*3600));
+	min=(o/60);
+	mina=(min/10);
+	minb=(min%10);
+	sec=(o-(min*60));
+	secb=(sec % 10);
+	seca=(sec/10);
+
+
+sprintf(buf, "%d", houra);
+  gtk_label_set_text(GTK_LABEL(labelh), buf);
+
+sprintf(buf, "%d", hourb);
+  gtk_label_set_text(GTK_LABEL(labelh1), buf);
+
+sprintf(buf, "%d", mina);
+  gtk_label_set_text(GTK_LABEL(labelm), buf);
+
+sprintf(buf, "%d", minb);
+  gtk_label_set_text(GTK_LABEL(labelm1), buf);
+
+
+sprintf(buf, "%d", seca);
+  gtk_label_set_text(GTK_LABEL(labels), buf);
+
+
+sprintf(buf, "%d", secb);
+  gtk_label_set_text(GTK_LABEL(labels1), buf);
+	//return TRUE;
+}
+
+
+int main(int argc, char** argv) {
+
+  GtkWidget *window;
+  GtkWidget *frame;
+  gtk_init(&argc, &argv);
+
+  window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+  gtk_window_set_default_size(GTK_WINDOW(window), 250, 180);
+  gtk_window_set_title(GTK_WINDOW(window), "A Fucking Clock");
+
+  frame = gtk_fixed_new();
+  gtk_container_add(GTK_CONTAINER(window), frame);
+
+
+label11 = gtk_label_new("Fucker!");
+gtk_widget_modify_font (label11,pango_font_description_from_string ("Monospace 25"));
+  gtk_fixed_put(GTK_FIXED(frame), label11, 30, 40); 
+ 
+
+ labelh = gtk_label_new("0");
+gtk_widget_modify_font (labelh,pango_font_description_from_string ("Monospace 20"));
+  gtk_fixed_put(GTK_FIXED(frame), labelh, 50, 80); 
+
+labelh1 = gtk_label_new("0");
+gtk_widget_modify_font (labelh1,pango_font_description_from_string ("Monospace 20"));
+  gtk_fixed_put(GTK_FIXED(frame), labelh1, 70, 80);
+
+label1 = gtk_label_new(":");
+gtk_widget_modify_font (label1,pango_font_description_from_string ("Monospace 20"));
+  gtk_fixed_put(GTK_FIXED(frame), label1, 90, 80); 
+
+labelm = gtk_label_new("0");
+gtk_widget_modify_font (labelm,pango_font_description_from_string ("Monospace 20"));
+  gtk_fixed_put(GTK_FIXED(frame), labelm, 100, 80); 
+
+labelm1 = gtk_label_new("0");
+gtk_widget_modify_font (labelm1,pango_font_description_from_string ("Monospace 20"));
+  gtk_fixed_put(GTK_FIXED(frame), labelm1, 120, 80); 
+
+label2 = gtk_label_new(":");
+gtk_widget_modify_font (label2,pango_font_description_from_string ("Monospace 20"));
+  gtk_fixed_put(GTK_FIXED(frame), label2, 140, 80); 
+
+labels = gtk_label_new("0");
+gtk_widget_modify_font (labels,pango_font_description_from_string ("Monospace 20"));
+  gtk_fixed_put(GTK_FIXED(frame), labels, 150, 80); 
+
+labels1 = gtk_label_new("0");
+gtk_widget_modify_font (labels1,pango_font_description_from_string ("Monospace 20"));
+  gtk_fixed_put(GTK_FIXED(frame), labels1, 170, 80); 
+
+	g_timeout_add(500, (GSourceFunc) secondd1, (gpointer) window);
+
+
+  gtk_widget_show_all(window);
+
+  g_signal_connect(window, "destroy",
+      G_CALLBACK (gtk_main_quit), NULL);
+
+  gtk_main();
+
+  return 0;
+}
