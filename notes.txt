@@ -1,0 +1,4 @@
+sudo apt-get install libcairo2-dev
+sudo apt-get install gtk2.0
+gcc -Wall -g clockk.c -o triclock `pkg-config --cflags gtk+-2.0` `pkg-config --libs gtk+-2.0` -lm 
+./triclock
